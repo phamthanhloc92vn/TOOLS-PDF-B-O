@@ -1,0 +1,12 @@
+{
+  // Cloudflare Workers static-assets deployment for the static export in `out/`.
+  // `npm run build` produces `out/` (including `_headers` with the COOP/COEP
+  // headers LibreOffice WASM needs); `npx wrangler deploy` uploads it.
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "tools-pdf-b-o",
+  "compatibility_date": "2025-10-01",
+  "assets": {
+    "directory": "./out",
+    "not_found_handling": "404-page"
+  }
+}
