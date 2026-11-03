@@ -1,8 +1,8 @@
 @import url('./phosphor/style.css');
 
 /* ==========================================================================
-   PDFCraft Direct Editor Design System
-   Matches PDFCraft Global Theme (Light & Dark Adaptive, Clean SaaS Aesthetic)
+   PDF-EDIT-1CLICK Direct Editor Design System
+   Matches PDF-EDIT-1CLICK Global Theme (Light & Dark Adaptive, Clean SaaS Aesthetic)
    ========================================================================== */
 
 :root,
@@ -2400,7 +2400,7 @@ html.dark #text-editor-app,
 
 
 /* ==========================================================================
-   PDFCraft Tailored Component Styles
+   PDF-EDIT-1CLICK Tailored Component Styles
    ========================================================================== */
 
 /* Top Toolbar */

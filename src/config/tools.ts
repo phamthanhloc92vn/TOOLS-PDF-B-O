@@ -1,7 +1,7 @@
 /**
  * Tools configuration file
  * Contains all 67 PDF tools with their properties, categories, and related tools
- * Migrated from BentoPDF and enhanced for PDFCraft
+ * Migrated from BentoPDF and enhanced for PDF-EDIT-1CLICK
  */
 
 import { Tool, ToolCategory } from '@/types/tool';

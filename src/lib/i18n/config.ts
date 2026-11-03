@@ -6,6 +6,12 @@
 export const locales = ['en', 'ja', 'ko', 'es', 'fr', 'de', 'zh', 'zh-TW', 'pt', 'ar', 'he', 'it', 'id', 'vi', 'ro', 'pl', 'cs', 'hi'] as const;
 export type Locale = (typeof locales)[number];
 
+/**
+ * Locales offered in the language pickers. Other locales stay routable
+ * (old links keep working) but are not listed.
+ */
+export const visibleLocales: readonly Locale[] = ['en', 'ja', 'vi'];
+
 export const defaultLocale: Locale = 'en';
 
 export const localeConfig: Record<Locale, {

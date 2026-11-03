@@ -2,15 +2,15 @@
  * Site configuration
  */
 export const siteConfig = {
-  name: 'PDFCraft',
+  name: 'PDF-EDIT-1CLICK',
   description: 'Professional PDF Tools - Free, Private & Browser-Based. Merge, split, compress, convert, and edit PDF files online without uploading to servers.',
   url: 'https://pdfcraft.devtoolcafe.com',
   ogImage: '/images/og-image.png',
   links: {
-    github: 'https://github.com/PDFCraftTool/pdfcraft',
+    github: 'https://github.com/phamthanhloc92vn/TOOLS-PDF-B-O',
     twitter: 'https://twitter.com/pdfcraft',
   },
-  creator: 'PDFCraft Team',
+  creator: 'PDF-EDIT-1CLICK Team',
   keywords: [
     'PDF tools',
     'PDF editor',
@@ -25,8 +25,8 @@ export const siteConfig = {
   ],
   // SEO-related settings
   seo: {
-    titleTemplate: '%s | PDFCraft',
-    defaultTitle: 'PDFCraft - Professional PDF Tools',
+    titleTemplate: '%s | PDF-EDIT-1CLICK',
+    defaultTitle: 'PDF-EDIT-1CLICK - Professional PDF Tools',
     twitterHandle: '@pdfcraft',
     locale: 'en_US',
   },

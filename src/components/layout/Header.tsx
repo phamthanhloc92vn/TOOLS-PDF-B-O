@@ -13,6 +13,8 @@ import { getToolContent } from '@/config/tool-content';
 import { getAllTools } from '@/config/tools';
 import { ThemeToggle } from '@/components/ui/ThemeToggle';
 import { UpdateCheckButton } from '@/components/common/UpdateCheckButton';
+import { QuickLanguageToggle } from './QuickLanguageToggle';
+import { BrandLogo } from './BrandLogo';
 
 export interface HeaderProps {
   locale: Locale;
@@ -161,8 +163,6 @@ export const Header: React.FC<HeaderProps> = ({ locale, showSearch = true }) => 
     { href: `/${locale}/studio`, label: 'Studio' },
     { href: `/${locale}/tools`, label: t('navigation.tools') },
     { href: `/${locale}/workflow`, label: t('navigation.workflow') || 'Workflow' },
-    { href: `/${locale}/about`, label: t('navigation.about') },
-    { href: `/${locale}/faq`, label: t('navigation.faq') },
   ];
 
   return (
@@ -182,21 +182,8 @@ export const Header: React.FC<HeaderProps> = ({ locale, showSearch = true }) => 
               className="group flex items-center gap-2.5 text-xl font-bold text-[hsl(var(--color-foreground))] hover:opacity-90 transition-opacity"
               aria-label={`${t('brand')} - ${t('navigation.home')}`}
             >
-              <div className="relative flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-[hsl(var(--color-primary))] to-[hsl(var(--color-accent))] shadow-lg shadow-primary/25 transition-transform group-hover:scale-105">
-                <svg
-                  className="h-5 w-5 text-white"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z" />
-                  <polyline points="14 2 14 8 20 8" />
-                </svg>
-              </div>
-              <span className="text-xl tracking-tight" data-testid="brand-name">
+              <BrandLogo className="h-9 w-9" />
+              <span className="text-lg tracking-tight whitespace-nowrap" data-testid="brand-name">
                 {t('brand')}
               </span>
             </Link>
@@ -204,7 +191,7 @@ export const Header: React.FC<HeaderProps> = ({ locale, showSearch = true }) => 
 
           {/* Desktop Navigation */}
           <nav
-            className={`hidden md:flex items-center gap-1 rounded-full border border-[hsl(var(--color-border))/0.4] bg-[hsl(var(--color-background))/0.5] p-1.5 backdrop-blur-sm shadow-sm transition-all duration-300 ${isSearchOpen ? 'opacity-0 translate-y-[-10px] pointer-events-none' : 'opacity-100 translate-y-0'
+            className={`hidden xl:flex flex-shrink-0 items-center gap-0.5 rounded-full border border-[hsl(var(--color-border))/0.4] bg-[hsl(var(--color-background))/0.5] p-1.5 backdrop-blur-sm shadow-sm transition-all duration-300 ${isSearchOpen ? 'opacity-0 translate-y-[-10px] pointer-events-none' : 'opacity-100 translate-y-0'
               }`}
             role="navigation"
             aria-label="Main navigation"
@@ -215,7 +202,7 @@ export const Header: React.FC<HeaderProps> = ({ locale, showSearch = true }) => 
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={`px-4 py-1.5 text-sm font-medium rounded-full transition-all inline-flex items-center gap-1.5 ${
+                  className={`px-3 xl:px-4 py-1.5 text-sm font-medium rounded-full whitespace-nowrap transition-all inline-flex items-center gap-1.5 ${
                     isStudio
                       ? 'text-[hsl(var(--color-primary))] hover:bg-[hsl(var(--color-primary)/0.1)]'
                       : 'text-[hsl(var(--color-muted-foreground))] hover:text-[hsl(var(--color-foreground))] hover:bg-[hsl(var(--color-muted))/0.5]'
@@ -335,7 +322,7 @@ export const Header: React.FC<HeaderProps> = ({ locale, showSearch = true }) => 
 
             {/* GitHub Repository Link */}
             <a
-              href="https://github.com/PDFCraftTool/pdfcraft"
+              href="https://github.com/phamthanhloc92vn/TOOLS-PDF-B-O"
               target="_blank"
               rel="noopener noreferrer"
               className="hidden sm:flex items-center justify-center h-9 w-9 rounded-lg text-[hsl(var(--color-muted-foreground))] hover:text-[hsl(var(--color-foreground))] hover:bg-[hsl(var(--color-muted))/0.5] transition-all"
@@ -343,6 +330,9 @@ export const Header: React.FC<HeaderProps> = ({ locale, showSearch = true }) => 
             >
               <Github className="h-5 w-5" aria-hidden="true" />
             </a>
+
+            {/* Quick VI / EN switch */}
+            <QuickLanguageToggle locale={locale} />
 
             {/* Theme Toggle */}
             <ThemeToggle />
@@ -354,7 +344,7 @@ export const Header: React.FC<HeaderProps> = ({ locale, showSearch = true }) => 
             <Button
               variant="ghost"
               size="sm"
-              className="md:hidden"
+              className="xl:hidden"
               onClick={handleMobileMenuToggle}
               aria-label={isMobileMenuOpen ? 'Close menu' : 'Open menu'}
               aria-expanded={isMobileMenuOpen}
@@ -373,7 +363,7 @@ export const Header: React.FC<HeaderProps> = ({ locale, showSearch = true }) => 
         {isMobileMenuOpen && (
           <nav
             id="mobile-menu"
-            className="md:hidden py-4 border-t border-[hsl(var(--color-border))] bg-[hsl(var(--color-background))] backdrop-blur-xl shadow-lg"
+            className="xl:hidden py-4 border-t border-[hsl(var(--color-border))] bg-[hsl(var(--color-background))] backdrop-blur-xl shadow-lg"
             role="navigation"
             aria-label="Mobile navigation"
           >
@@ -404,7 +394,7 @@ export const Header: React.FC<HeaderProps> = ({ locale, showSearch = true }) => 
               {/* GitHub Link in Mobile Menu */}
               <li>
                 <a
-                  href="https://github.com/PDFCraftTool/pdfcraft"
+                  href="https://github.com/phamthanhloc92vn/TOOLS-PDF-B-O"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-3 px-4 py-3 text-base font-medium text-[hsl(var(--color-foreground))] hover:bg-[hsl(var(--color-muted))] rounded-lg transition-colors"

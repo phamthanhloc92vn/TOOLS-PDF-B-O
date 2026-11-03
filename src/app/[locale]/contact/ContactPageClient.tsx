@@ -40,7 +40,7 @@ export default function ContactPageClient({ locale }: ContactPageClientProps) {
       title: t('methods.github.title'),
       description: t('methods.github.description'),
       action: t('methods.github.action'),
-      href: 'https://github.com/PDFCraftTool/pdfcraft',
+      href: 'https://github.com/phamthanhloc92vn/TOOLS-PDF-B-O',
     },
     {
       icon: Twitter,

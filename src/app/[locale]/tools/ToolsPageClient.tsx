@@ -13,7 +13,8 @@ import { Card } from '@/components/ui/Card';
 import { getAllTools, getToolsByCategory, getToolById } from '@/config/tools';
 import { toolMatchesQuery } from '@/lib/utils/search';
 import { type Locale } from '@/lib/i18n/config';
-import { CATEGORY_INFO, type ToolCategory } from '@/types/tool';
+import { type ToolCategory } from '@/types/tool';
+import { CATEGORY_COLORS } from '@/config/category-colors';
 import { useFavorites } from '@/hooks/useFavorites';
 
 type CategoryFilter = ToolCategory | 'all' | 'favorites';
@@ -111,19 +112,16 @@ export default function ToolsPageClient({ locale, localizedToolContent }: ToolsP
 
       <main className="flex-1">
         {/* Page Header */}
-        <section className="relative pt-36 pb-20 overflow-hidden">
-          {/* Animated Background Blobs (Subtle) */}
-          <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none -z-10">
-            <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[hsl(var(--color-primary)/0.05)] rounded-full mix-blend-multiply filter blur-3xl opacity-50" />
-            <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-[hsl(var(--color-accent)/0.05)] rounded-full mix-blend-multiply filter blur-3xl opacity-50" />
-          </div>
+        <section className="relative pt-16 pb-14 md:pt-20 overflow-hidden border-b border-[hsl(var(--color-border))]">
+          {/* Subtle grid background */}
+          <div className="absolute inset-0 -z-10 hero-grid pointer-events-none" aria-hidden="true" />
 
           <div className="container mx-auto px-4 relative z-10">
-            <div className="max-w-3xl mx-auto text-center">
-              <h1 className="text-4xl md:text-5xl font-bold text-[hsl(var(--color-foreground))] mb-6">
-                <span className="text-gradient">{t('toolsPage.title')}</span>
+            <div className="max-w-3xl mx-auto text-center animate-fade-up">
+              <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-[hsl(var(--color-foreground))] mb-4">
+                {t('toolsPage.title')}
               </h1>
-              <p className="text-lg text-[hsl(var(--color-muted-foreground))] mb-10 leading-relaxed">
+              <p className="text-lg text-[hsl(var(--color-muted-foreground))] mb-8 leading-relaxed">
                 {t('toolsPage.subtitle', { count: allTools.length })}
               </p>
 
@@ -136,7 +134,7 @@ export default function ToolsPageClient({ locale, localizedToolContent }: ToolsP
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     placeholder={t('tools.search.placeholder')}
-                    className="w-full pl-14 pr-12 py-4 text-lg rounded-2xl border border-[hsl(var(--color-border))] bg-[hsl(var(--color-card))] dark:bg-[hsl(var(--color-card))] text-[hsl(var(--color-foreground))] placeholder:text-[hsl(var(--color-muted-foreground))] shadow-md focus:outline-none focus:ring-4 focus:ring-[hsl(var(--color-primary)/0.15)] focus:border-[hsl(var(--color-primary))] transition-all"
+                    className="w-full pl-14 pr-12 py-3.5 text-base rounded-xl border border-[hsl(var(--color-border))] bg-[hsl(var(--color-card))] dark:bg-[hsl(var(--color-card))] text-[hsl(var(--color-foreground))] placeholder:text-[hsl(var(--color-muted-foreground))] shadow-sm focus:outline-none focus:ring-4 focus:ring-[hsl(var(--color-primary)/0.15)] focus:border-[hsl(var(--color-primary))] transition-all"
                     aria-label="Search tools"
                   />
                   {searchQuery && (
@@ -155,10 +153,10 @@ export default function ToolsPageClient({ locale, localizedToolContent }: ToolsP
         </section>
 
         {/* Filters and Tools */}
-        <section className="py-8 bg-[hsl(var(--color-muted)/0.3)] min-h-[500px]">
+        <section className="py-8 min-h-[500px]">
           <div className="container mx-auto px-4">
             {/* Filter Bar */}
-            <div className="flex flex-col md:flex-row items-center gap-6 mb-10 sticky top-20 z-40 py-4 px-6 rounded-2xl glass-card transition-all">
+            <div className="flex flex-col md:flex-row items-center gap-6 mb-10 sticky top-20 z-40 py-3 px-4 rounded-xl border border-[hsl(var(--color-border))] bg-[hsl(var(--color-card)/0.95)] shadow-sm backdrop-blur transition-all">
               {/* Mobile Filter Toggle */}
               <Button
                 variant="outline"
@@ -177,21 +175,29 @@ export default function ToolsPageClient({ locale, localizedToolContent }: ToolsP
                 role="group"
                 aria-label="Filter by category"
               >
-                {categories.map((cat) => (
+                {categories.map((cat) => {
+                  const catColors = cat.value !== 'all' && cat.value !== 'favorites'
+                    ? CATEGORY_COLORS[cat.value as ToolCategory]
+                    : null;
+                  const isActive = selectedCategory === cat.value;
+                  return (
                   <button
                     key={cat.value}
                     onClick={() => setSelectedCategory(cat.value)}
-                    aria-pressed={selectedCategory === cat.value}
+                    aria-pressed={isActive}
                     className={`
-                      px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 flex items-center gap-1.5
-                      ${selectedCategory === cat.value
+                      px-3.5 py-2 rounded-lg text-sm font-medium transition-all duration-200 flex items-center gap-1.5 border
+                      ${isActive
                         ? cat.value === 'favorites'
-                          ? 'bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-300 shadow-md'
-                          : 'bg-[hsl(var(--color-primary))] text-white shadow-md shadow-primary/25'
-                        : 'bg-transparent text-[hsl(var(--color-muted-foreground))] hover:bg-[hsl(var(--color-muted))] hover:text-[hsl(var(--color-foreground))]'
+                          ? 'bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-300 border-amber-200 dark:border-amber-500/30'
+                          : catColors
+                            ? `${catColors.badge} border-transparent font-semibold`
+                            : 'bg-[hsl(var(--color-foreground))] text-[hsl(var(--color-background))] border-transparent'
+                        : 'bg-transparent border-transparent text-[hsl(var(--color-muted-foreground))] hover:bg-[hsl(var(--color-muted))] hover:text-[hsl(var(--color-foreground))]'
                       }
                     `}
                   >
+                    {catColors && <span className={`w-2 h-2 rounded-full ${catColors.bar}`} aria-hidden="true" />}
                     {cat.icon}
                     {cat.label}
                     {cat.value === 'favorites' && favoritesLoaded && (
@@ -205,7 +211,8 @@ export default function ToolsPageClient({ locale, localizedToolContent }: ToolsP
                       </span>
                     )}
                   </button>
-                ))}
+                  );
+                })}
               </div>
 
               {/* Clear Filters */}

@@ -69,7 +69,7 @@ export const getToolDefaultOptions = (id: string, isZh: boolean = false): Record
     case 'pdf-two-column-reflower':
       return { middleGapRatio: 0.5, horizontalReading: false };
     case 'pdf-spine-bookbinder':
-      return { pageCount: 100, paperGsm: 80, bookTitle: 'PDFCraft Book' };
+      return { pageCount: 100, paperGsm: 80, bookTitle: 'PDF-EDIT-1CLICK Book' };
     case 'pdf-page-resizer-uniform':
       return { targetSize: 'A4', scaleMode: 'fit' };
     case 'pdf-scratchpad-canvas':
@@ -79,7 +79,7 @@ export const getToolDefaultOptions = (id: string, isZh: boolean = false): Record
     case 'bookmark':
       return { title: '', pageNumber: 1, level: 1 };
     case 'edit-metadata':
-      return { title: '', author: '', subject: '', keywords: '', creator: 'PDFCraft' };
+      return { title: '', author: '', subject: '', keywords: '', creator: 'PDF-EDIT-1CLICK' };
     case 'interactive-toc-generator':
       return { title: isZh ? '交互式目录' : 'Table of Contents', insertIndex: 1 };
     case 'bookmarks-auto-generator':

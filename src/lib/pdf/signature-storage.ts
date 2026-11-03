@@ -1,5 +1,5 @@
 /**
- * PDFCraft Local Signature Storage
+ * PDF-EDIT-1CLICK Local Signature Storage
  * Manages extracted and custom signatures stored in localStorage.
  */
 

@@ -284,7 +284,7 @@ export function SignatureExtractorModal({
   };
 
   /**
-   * Action 1: Save to PDFCraft Signature Library (and inject into Viewer if active)
+   * Action 1: Save to PDF-EDIT-1CLICK Signature Library (and inject into Viewer if active)
    */
   const handleSaveToLibrary = async () => {
     if (!extractedResult) return;

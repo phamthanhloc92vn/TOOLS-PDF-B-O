@@ -7,6 +7,7 @@ import { Card } from '@/components/ui/Card';
 import { ArrowUpRight } from 'lucide-react';
 import { getToolIcon } from '@/config/icons';
 import { FavoriteButton } from '@/components/ui/FavoriteButton';
+import { CATEGORY_COLORS } from '@/config/category-colors';
 
 export interface ToolCardProps {
   /** Tool data to display */
@@ -53,6 +54,7 @@ export function ToolCard({ tool, locale, className = '', localizedContent }: Too
   const IconComponent = getToolIcon(tool.icon);
 
   const categoryName = t(`home.categories.${categoryTranslationKeys[tool.category]}`);
+  const colors = CATEGORY_COLORS[tool.category];
 
   return (
     <Link
@@ -61,25 +63,26 @@ export function ToolCard({ tool, locale, className = '', localizedContent }: Too
       data-testid="tool-card"
     >
       <Card
-        className="h-full glass-card hover:bg-[hsl(var(--color-card))/0.8] transition-all duration-300 hover:shadow-xl hover:-translate-y-1 relative overflow-hidden border-[hsl(var(--color-border))/0.6]"
+        className={`h-full bg-[hsl(var(--color-card))] transition-all duration-300 hover:shadow-[var(--shadow-lg)] hover:-translate-y-0.5 relative overflow-hidden ${colors.hoverBorder}`}
         data-testid="tool-card-container"
       >
+        <div className={`absolute top-0 left-0 right-0 h-0.5 ${colors.bar} origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300`} aria-hidden="true" />
         <div className="absolute top-0 right-0 p-3 z-10">
           <FavoriteButton toolId={tool.id} size="sm" />
         </div>
         <div className="absolute top-0 right-10 p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-          <ArrowUpRight className="w-5 h-5 text-[hsl(var(--color-primary))]" />
+          <ArrowUpRight className={`w-5 h-5 ${colors.text}`} />
         </div>
 
         <div className="flex flex-col h-full">
           <div className="flex items-start gap-4 mb-4">
             {/* Tool Icon */}
             <div
-              className="flex-shrink-0 w-14 h-14 rounded-2xl bg-gradient-to-br from-[hsl(var(--color-primary)/0.1)] to-[hsl(var(--color-accent)/0.1)] flex items-center justify-center group-hover:scale-110 transition-transform duration-300"
+              className={`flex-shrink-0 w-12 h-12 rounded-xl ${colors.iconBg} flex items-center justify-center group-hover:scale-105 transition-transform duration-300`}
               data-testid="tool-card-icon"
               aria-hidden="true"
             >
-              <IconComponent className="w-7 h-7 text-[hsl(var(--color-primary))]" data-icon={tool.icon} />
+              <IconComponent className={`w-6 h-6 ${colors.text}`} data-icon={tool.icon} />
             </div>
           </div>
 
@@ -100,10 +103,10 @@ export function ToolCard({ tool, locale, className = '', localizedContent }: Too
           </div>
 
           <div className="mt-4 pt-4 border-t border-[hsl(var(--color-border)/0.5)] flex items-center justify-between text-xs text-[hsl(var(--color-muted-foreground))]">
-            <span className="font-medium bg-[hsl(var(--color-secondary)/0.5)] px-2 py-1 rounded-md">
+            <span className={`font-medium px-2 py-1 rounded-md ${colors.badge}`}>
               {categoryName}
             </span>
-            <span className="group-hover:translate-x-1 transition-transform duration-300 text-[hsl(var(--color-primary))] font-medium opacity-0 group-hover:opacity-100">
+            <span className={`group-hover:translate-x-1 transition-all duration-300 ${colors.text} font-medium opacity-0 group-hover:opacity-100`}>
               {t('common.buttons.next') || 'Try now'} {/* Using Next as dummy or keep Try now if no key */}
             </span>
           </div>

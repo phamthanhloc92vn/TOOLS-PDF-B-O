@@ -147,60 +147,45 @@ export const ProcessingProgress: React.FC<ProcessingProgressProps> = ({
         <div className="flex items-center gap-2">
           {/* Status indicator */}
           {(status === 'uploading' || status === 'processing') && (
-            <div className="relative">
-              <div className="w-4 h-4 rounded-full bg-[hsl(var(--color-primary)/0.3)]" />
-              <div className="absolute inset-0 w-4 h-4 rounded-full bg-[hsl(var(--color-primary))] animate-ping opacity-75" />
+            <div className="relative flex items-center justify-center w-9 h-9 rounded-lg bg-[hsl(var(--color-primary)/0.1)] overflow-hidden" aria-hidden="true">
+              <svg className="w-5 h-5 text-[hsl(var(--color-primary))] motion-safe:animate-page-flip" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M14 3H7a2 2 0 00-2 2v14a2 2 0 002 2h10a2 2 0 002-2V8l-5-5z" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M14 3v5h5M9 13h6M9 17h4" />
+              </svg>
+              <div className="absolute inset-x-0 h-3 bg-gradient-to-b from-transparent via-[hsl(var(--color-primary)/0.35)] to-transparent motion-safe:animate-scan" />
             </div>
           )}
           {status === 'complete' && (
-            <svg
-              className="w-5 h-5 text-green-500"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              aria-hidden="true"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M5 13l4 4L19 7"
-              />
-            </svg>
+            <div className="flex items-center justify-center w-9 h-9 rounded-lg bg-green-500/10 motion-safe:animate-pop-in" aria-hidden="true">
+              <svg className="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
+              </svg>
+            </div>
           )}
           {status === 'error' && (
-            <svg
-              className="w-5 h-5 text-red-500"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              aria-hidden="true"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M6 18L18 6M6 6l12 12"
-              />
-            </svg>
+            <div className="flex items-center justify-center w-9 h-9 rounded-lg bg-red-500/10 motion-safe:animate-shake" aria-hidden="true">
+              <svg className="w-5 h-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </div>
           )}
-          
+
           {/* Status text */}
-          <span className="text-sm font-medium text-[hsl(var(--color-foreground))]">
+          <span className="text-sm font-semibold text-[hsl(var(--color-foreground))]">
             {statusText}
           </span>
         </div>
 
         {/* Percentage */}
         {showPercentage && (
-          <span className="text-sm font-medium text-[hsl(var(--color-muted-foreground))]">
+          <span className="text-sm font-semibold tabular-nums text-[hsl(var(--color-foreground))]">
             {Math.round(clampedProgress)}%
           </span>
         )}
       </div>
 
       {/* Progress bar */}
-      <div className="relative w-full h-2 bg-[hsl(var(--color-muted))] rounded-full overflow-hidden">
+      <div className="relative w-full h-2.5 bg-[hsl(var(--color-muted))] rounded-full overflow-hidden">
         <div
           className={`absolute left-0 top-0 h-full transition-all duration-300 ease-out rounded-full ${progressBarColor}`}
           style={{ width: `${clampedProgress}%` }}
@@ -212,6 +197,11 @@ export const ProcessingProgress: React.FC<ProcessingProgressProps> = ({
             className="absolute left-0 top-0 h-full bg-gradient-to-r from-transparent via-[hsl(var(--color-primary-foreground)/0.3)] to-transparent motion-safe:animate-shimmer"
             style={{ width: `${clampedProgress}%` }}
           />
+        )}
+
+        {/* Indeterminate sweep while no measurable progress yet */}
+        {(status === 'uploading' || status === 'processing') && clampedProgress === 0 && (
+          <div className="absolute top-0 h-full w-2/5 rounded-full bg-[hsl(var(--color-primary)/0.6)] motion-safe:animate-indeterminate" />
         )}
       </div>
 

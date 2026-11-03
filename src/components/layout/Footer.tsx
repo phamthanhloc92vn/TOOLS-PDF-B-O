@@ -4,9 +4,10 @@ import React from 'react';
 import Link from 'next/link';
 import { useRouter, usePathname } from 'next/navigation';
 import { useTranslations } from 'next-intl';
-import { Shield, Lock, FileCheck, Github, Twitter, Mail, Globe } from 'lucide-react';
-import { type Locale, locales, localeConfig, getLocalizedPath } from '@/lib/i18n/config';
+import { Shield, Lock, FileCheck, Globe, ChevronDown } from 'lucide-react';
+import { type Locale, visibleLocales, localeConfig, getLocalizedPath } from '@/lib/i18n/config';
 import { saveLanguagePreference } from './LanguageSelector';
+import { BrandLogo } from './BrandLogo';
 
 export interface FooterProps {
   locale: Locale;
@@ -19,10 +20,7 @@ export const Footer: React.FC<FooterProps> = ({ locale }) => {
   const pathname = usePathname();
 
   const footerLinks = [
-    { href: `/${locale}/about`, label: t('navigation.about') },
-    { href: `/${locale}/faq`, label: t('navigation.faq') },
     { href: `/${locale}/privacy`, label: t('navigation.privacy') },
-    { href: `/${locale}/contact`, label: t('navigation.contact') },
   ];
 
   const handleLanguageChange = (newLocale: Locale) => {
@@ -33,10 +31,17 @@ export const Footer: React.FC<FooterProps> = ({ locale }) => {
 
   return (
     <footer
-      className="w-full border-t border-[hsl(var(--color-border))] bg-[hsl(var(--color-background))] pt-16 pb-8"
+      className="w-full border-t border-[hsl(var(--color-border))] bg-[hsl(var(--color-background))] pt-6 pb-8"
       role="contentinfo"
     >
       <div className="container mx-auto px-4">
+        <details className="group/more mb-6">
+          <summary className="flex items-center justify-center gap-2 py-2 cursor-pointer select-none list-none [&::-webkit-details-marker]:hidden text-sm font-medium text-[hsl(var(--color-muted-foreground))] hover:text-[hsl(var(--color-foreground))] transition-colors">
+            {locale === 'vi' ? 'Thông tin thêm' : 'More information'}
+            <ChevronDown className="h-4 w-4 transition-transform duration-200 group-open/more:rotate-180" aria-hidden="true" />
+          </summary>
+
+          <div className="pt-8 animate-fade-up">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
           {/* Brand Column */}
           <div className="col-span-1 md:col-span-1 flex flex-col gap-6">
@@ -45,37 +50,12 @@ export const Footer: React.FC<FooterProps> = ({ locale }) => {
               className="group flex items-center gap-2.5 text-xl font-bold text-[hsl(var(--color-foreground))]"
               aria-label={`${t('brand')} - ${t('navigation.home')}`}
             >
-              <div className="relative flex h-8 w-8 items-center justify-center rounded-lg bg-[hsl(var(--color-primary))] text-white shadow-md transition-transform group-hover:scale-105">
-                <svg
-                  className="h-5 w-5"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z" />
-                  <polyline points="14 2 14 8 20 8" />
-                </svg>
-              </div>
-              <span data-testid="footer-brand-name">{t('brand')}</span>
+              <BrandLogo className="h-8 w-8" />
+              <span className="whitespace-nowrap" data-testid="footer-brand-name">{t('brand')}</span>
             </Link>
             <p className="text-sm text-[hsl(var(--color-muted-foreground))] leading-relaxed max-w-xs">
               {t('tagline') || 'Professional, secure, and free PDF tools for everyone. No installation required.'}
             </p>
-
-            <div className="flex gap-4">
-              <a href="https://github.com/PDFCraftTool/pdfcraft" className="p-2 rounded-full bg-[hsl(var(--color-muted))] text-[hsl(var(--color-muted-foreground))] hover:bg-[hsl(var(--color-primary))] hover:text-white transition-all">
-                <Github className="w-4 h-4" />
-              </a>
-              <a href="https://x.com/PDFCraftTool" className="p-2 rounded-full bg-[hsl(var(--color-muted))] text-[hsl(var(--color-muted-foreground))] hover:bg-[hsl(var(--color-primary))] hover:text-white transition-all">
-                <Twitter className="w-4 h-4" />
-              </a>
-              <a href="#" className="p-2 rounded-full bg-[hsl(var(--color-muted))] text-[hsl(var(--color-muted-foreground))] hover:bg-[hsl(var(--color-primary))] hover:text-white transition-all">
-                <Mail className="w-4 h-4" />
-              </a>
-            </div>
           </div>
 
           {/* Quick Links */}
@@ -153,7 +133,7 @@ export const Footer: React.FC<FooterProps> = ({ locale }) => {
             </span>
           </div>
           <div className="flex flex-wrap gap-2">
-            {locales.map((loc) => {
+            {(visibleLocales.includes(locale) ? visibleLocales : [...visibleLocales, locale]).map((loc) => {
               const config = localeConfig[loc];
               const isActive = loc === locale;
               return (
@@ -175,9 +155,11 @@ export const Footer: React.FC<FooterProps> = ({ locale }) => {
             })}
           </div>
         </div>
+          </div>
+        </details>
 
         {/* Copyright */}
-        <div className="pt-8 border-t border-[hsl(var(--color-border))] flex flex-col md:flex-row items-center justify-between gap-4">
+        <div className="pt-6 border-t border-[hsl(var(--color-border))] flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-sm text-[hsl(var(--color-muted-foreground))]">
             &copy; {currentYear} {t('brand')}. {t('footer.copyright', { year: '' }).replace(/^\d{4}\s*/, '')}
           </p>
